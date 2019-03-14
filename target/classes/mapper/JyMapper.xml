@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leeray.lm.dao.JyMapper" >
+  <resultMap id="BaseResultMap" type="com.leeray.lm.entity.Jy" >
+    <id column="RNO" property="rno" jdbcType="CHAR" />
+    <id column="BNO" property="bno" jdbcType="CHAR" />
+    <result column="JDATE" property="jdate" jdbcType="TIMESTAMP" />
+    <result column="RDATE" property="rdate" jdbcType="TIMESTAMP" />
+    <result column="GHDATE" property="ghdate" jdbcType="TIMESTAMP" />
+    <result column="FINE" property="fine" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RNO, BNO, JDATE, RDATE, GHDATE, FINE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.leeray.lm.entity.JyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.leeray.lm.entity.JyKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from jy
+    where RNO = #{rno,jdbcType=CHAR}
+      and BNO = #{bno,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.leeray.lm.entity.JyKey" >
+    delete from jy
+    where RNO = #{rno,jdbcType=CHAR}
+      and BNO = #{bno,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leeray.lm.entity.JyExample" >
+    delete from jy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leeray.lm.entity.Jy" >
+    insert into jy (RNO, BNO, JDATE, 
+      RDATE, GHDATE, FINE
+      )
+    values (#{rno,jdbcType=CHAR}, #{bno,jdbcType=CHAR}, #{jdate,jdbcType=TIMESTAMP}, 
+      #{rdate,jdbcType=TIMESTAMP}, #{ghdate,jdbcType=TIMESTAMP}, #{fine,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeray.lm.entity.Jy" >
+    insert into jy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rno != null" >
+        RNO,
+      </if>
+      <if test="bno != null" >
+        BNO,
+      </if>
+      <if test="jdate != null" >
+        JDATE,
+      </if>
+      <if test="rdate != null" >
+        RDATE,
+      </if>
+      <if test="ghdate != null" >
+        GHDATE,
+      </if>
+      <if test="fine != null" >
+        FINE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rno != null" >
+        #{rno,jdbcType=CHAR},
+      </if>
+      <if test="bno != null" >
+        #{bno,jdbcType=CHAR},
+      </if>
+      <if test="jdate != null" >
+        #{jdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rdate != null" >
+        #{rdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ghdate != null" >
+        #{ghdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fine != null" >
+        #{fine,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leeray.lm.entity.JyExample" resultType="java.lang.Integer" >
+    select count(*) from jy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update jy
+    <set >
+      <if test="record.rno != null" >
+        RNO = #{record.rno,jdbcType=CHAR},
+      </if>
+      <if test="record.bno != null" >
+        BNO = #{record.bno,jdbcType=CHAR},
+      </if>
+      <if test="record.jdate != null" >
+        JDATE = #{record.jdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rdate != null" >
+        RDATE = #{record.rdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ghdate != null" >
+        GHDATE = #{record.ghdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fine != null" >
+        FINE = #{record.fine,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update jy
+    set RNO = #{record.rno,jdbcType=CHAR},
+      BNO = #{record.bno,jdbcType=CHAR},
+      JDATE = #{record.jdate,jdbcType=TIMESTAMP},
+      RDATE = #{record.rdate,jdbcType=TIMESTAMP},
+      GHDATE = #{record.ghdate,jdbcType=TIMESTAMP},
+      FINE = #{record.fine,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeray.lm.entity.Jy" >
+    update jy
+    <set >
+      <if test="jdate != null" >
+        JDATE = #{jdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rdate != null" >
+        RDATE = #{rdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ghdate != null" >
+        GHDATE = #{ghdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fine != null" >
+        FINE = #{fine,jdbcType=REAL},
+      </if>
+    </set>
+    where RNO = #{rno,jdbcType=CHAR}
+      and BNO = #{bno,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeray.lm.entity.Jy" >
+    update jy
+    set JDATE = #{jdate,jdbcType=TIMESTAMP},
+      RDATE = #{rdate,jdbcType=TIMESTAMP},
+      GHDATE = #{ghdate,jdbcType=TIMESTAMP},
+      FINE = #{fine,jdbcType=REAL}
+    where RNO = #{rno,jdbcType=CHAR}
+      and BNO = #{bno,jdbcType=CHAR}
+  </update>
+</mapper>

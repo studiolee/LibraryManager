@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leeray.lm.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.leeray.lm.entity.Book" >
+    <id column="BNO" property="bno" jdbcType="CHAR" />
+    <result column="BKNO" property="bkno" jdbcType="CHAR" />
+    <result column="BNAME" property="bname" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="CHAR" />
+    <result column="PUB" property="pub" jdbcType="CHAR" />
+    <result column="PRICE" property="price" jdbcType="REAL" />
+    <result column="PIC" property="pic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BNO, BKNO, BNAME, AUTHOR, PUB, PRICE, PIC
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.leeray.lm.entity.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where BNO = #{bno,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from book
+    where BNO = #{bno,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leeray.lm.entity.BookExample" >
+    delete from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leeray.lm.entity.Book" >
+    insert into book (BNO, BKNO, BNAME, AUTHOR, 
+      PUB, PRICE, PIC)
+    values (#{bno,jdbcType=CHAR}, #{bkno,jdbcType=CHAR}, #{bname,jdbcType=VARCHAR}, #{author,jdbcType=CHAR}, 
+      #{pub,jdbcType=CHAR}, #{price,jdbcType=REAL}, #{pic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeray.lm.entity.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bno != null" >
+        BNO,
+      </if>
+      <if test="bkno != null" >
+        BKNO,
+      </if>
+      <if test="bname != null" >
+        BNAME,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="pub != null" >
+        PUB,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="pic != null" >
+        PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bno != null" >
+        #{bno,jdbcType=CHAR},
+      </if>
+      <if test="bkno != null" >
+        #{bkno,jdbcType=CHAR},
+      </if>
+      <if test="bname != null" >
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=CHAR},
+      </if>
+      <if test="pub != null" >
+        #{pub,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leeray.lm.entity.BookExample" resultType="java.lang.Integer" >
+    select count(*) from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book
+    <set >
+      <if test="record.bno != null" >
+        BNO = #{record.bno,jdbcType=CHAR},
+      </if>
+      <if test="record.bkno != null" >
+        BKNO = #{record.bkno,jdbcType=CHAR},
+      </if>
+      <if test="record.bname != null" >
+        BNAME = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        AUTHOR = #{record.author,jdbcType=CHAR},
+      </if>
+      <if test="record.pub != null" >
+        PUB = #{record.pub,jdbcType=CHAR},
+      </if>
+      <if test="record.price != null" >
+        PRICE = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.pic != null" >
+        PIC = #{record.pic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book
+    set BNO = #{record.bno,jdbcType=CHAR},
+      BKNO = #{record.bkno,jdbcType=CHAR},
+      BNAME = #{record.bname,jdbcType=VARCHAR},
+      AUTHOR = #{record.author,jdbcType=CHAR},
+      PUB = #{record.pub,jdbcType=CHAR},
+      PRICE = #{record.price,jdbcType=REAL},
+      PIC = #{record.pic,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeray.lm.entity.Book" >
+    update book
+    <set >
+      <if test="bkno != null" >
+        BKNO = #{bkno,jdbcType=CHAR},
+      </if>
+      <if test="bname != null" >
+        BNAME = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=CHAR},
+      </if>
+      <if test="pub != null" >
+        PUB = #{pub,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=REAL},
+      </if>
+      <if test="pic != null" >
+        PIC = #{pic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BNO = #{bno,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeray.lm.entity.Book" >
+    update book
+    set BKNO = #{bkno,jdbcType=CHAR},
+      BNAME = #{bname,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=CHAR},
+      PUB = #{pub,jdbcType=CHAR},
+      PRICE = #{price,jdbcType=REAL},
+      PIC = #{pic,jdbcType=VARCHAR}
+    where BNO = #{bno,jdbcType=CHAR}
+  </update>
+  
+  <!-- 根据书名模糊查询图书信息，既要有图书基本的信息，也要有图书的类别信息
+  		这里就要对book,bookkind两张表进行联合查询了
+   -->
+  <select id="findBookByName" parameterType="java.lang.String" resultType="BookCustom">
+  	select book.*,bookkind.bkname from book,bookkind
+	WHERE book.bkno = bookkind.bkno and book.BNAME like "%"#{name}"%"
+  </select>
+  
+  <!-- 根据图书号bno来查询图书信息，同样是book和bookkind的联合查询
+  	返回结果是唯一的，因为图书号bno是book表的主键
+   -->
+   <select id="findBookByBNO" parameterType="java.lang.String" resultType="BookCustom">
+   	select book.*,bookkind.bkname from book,bookkind
+	WHERE book.bkno = bookkind.bkno and book.bno = #{bno}
+   </select>
+  
+  <!-- 根据rno来查找借阅的所有图书信息和图书种类信息 -->
+  <select id="findBookListByRNO" parameterType="java.lang.String" resultType="BookCustom">
+  	SELECT book.*,jy.rdate,bookkind.BKNAME 
+  	from jy,book,bookkind
+	where jy.rno = #{RNO} AND jy.bno = book.bno AND book.BKNO = bookkind.BKNO
+  </select>
+  
+</mapper>

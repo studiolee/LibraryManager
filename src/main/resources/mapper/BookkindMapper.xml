@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leeray.lm.dao.BookkindMapper" >
+  <resultMap id="BaseResultMap" type="com.leeray.lm.entity.Bookkind" >
+    <id column="BKNO" property="bkno" jdbcType="CHAR" />
+    <result column="BKNAME" property="bkname" jdbcType="CHAR" />
+    <result column="BKD" property="bkd" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BKNO, BKNAME, BKD
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.leeray.lm.entity.BookkindExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bookkind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bookkind
+    where BKNO = #{bkno,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bookkind
+    where BKNO = #{bkno,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leeray.lm.entity.BookkindExample" >
+    delete from bookkind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leeray.lm.entity.Bookkind" >
+    insert into bookkind (BKNO, BKNAME, BKD)
+    values (#{bkno,jdbcType=CHAR}, #{bkname,jdbcType=CHAR}, #{bkd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeray.lm.entity.Bookkind" >
+    insert into bookkind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bkno != null" >
+        BKNO,
+      </if>
+      <if test="bkname != null" >
+        BKNAME,
+      </if>
+      <if test="bkd != null" >
+        BKD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bkno != null" >
+        #{bkno,jdbcType=CHAR},
+      </if>
+      <if test="bkname != null" >
+        #{bkname,jdbcType=CHAR},
+      </if>
+      <if test="bkd != null" >
+        #{bkd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leeray.lm.entity.BookkindExample" resultType="java.lang.Integer" >
+    select count(*) from bookkind
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bookkind
+    <set >
+      <if test="record.bkno != null" >
+        BKNO = #{record.bkno,jdbcType=CHAR},
+      </if>
+      <if test="record.bkname != null" >
+        BKNAME = #{record.bkname,jdbcType=CHAR},
+      </if>
+      <if test="record.bkd != null" >
+        BKD = #{record.bkd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bookkind
+    set BKNO = #{record.bkno,jdbcType=CHAR},
+      BKNAME = #{record.bkname,jdbcType=CHAR},
+      BKD = #{record.bkd,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeray.lm.entity.Bookkind" >
+    update bookkind
+    <set >
+      <if test="bkname != null" >
+        BKNAME = #{bkname,jdbcType=CHAR},
+      </if>
+      <if test="bkd != null" >
+        BKD = #{bkd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BKNO = #{bkno,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeray.lm.entity.Bookkind" >
+    update bookkind
+    set BKNAME = #{bkname,jdbcType=CHAR},
+      BKD = #{bkd,jdbcType=VARCHAR}
+    where BKNO = #{bkno,jdbcType=CHAR}
+  </update>
+</mapper>
