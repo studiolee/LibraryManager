@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.leeray.lm.entity.QueryCustom;
 import com.leeray.lm.entity.Reader;
 import com.leeray.lm.entity.ReaderCustom;
 import com.leeray.lm.service.ReaderService;
@@ -86,6 +87,7 @@ public class ReaderController {
 	public String searchYourInfo(@RequestParam(value = "rno1") String rno, Model model) {
 		ReaderCustom rdInfo = readerService.findReaderByRNO(rno);
 		model.addAttribute("rdInfo", rdInfo);
+		System.out.println("sdhh");
 		return "userInfo";
 	}
 

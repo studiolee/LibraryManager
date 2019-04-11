@@ -93,12 +93,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<c:when test="${not empty bookList}">
 				<table border="1" align="center" cellpadding="2">
 					<tr>
-						<th>图书名</th><th>作者</th><th>出版社</th><th>应该归还的日期</th><th>图书种类</th>
+						<th>图书名</th><th>作者</th><th>出版社</th><th>应该归还的日期</th><th>图书种类</th><th>按时归还吗</th>>
 					</tr>
 					<c:forEach items="${bookList}" var="book">
-					<tr>
-						<td>${book.bname}</td><td>${book.author}</td><td>${book.pub}</td><td>${book.dateFormat}</td><td>${book.bkname}</td>
+					 <tr>
+						<td>${book.book.bname}</td><td>${book.book.author}</td><td>${book.book.pub}</td><td>${book.book.dateFormat}</td><td>${book.book.bkname}</td><td>${book.isOntime}</td>
 					</tr>
+					
 					</c:forEach>
 				</table>
 			</c:when>
